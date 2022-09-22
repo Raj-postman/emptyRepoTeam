@@ -1,0 +1,277 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.wipo.org/wsdl/ps" xmlns:intf="http://www.wipo.org/wsdl/ps" xmlns:impl="http://www.wipo.org/wsdl/ps" xmlns:apachesoap="http://xml.apache.org/xml-soap" targetNamespace="http://www.wipo.org/wsdl/ps">
+<wsdl:types>
+<schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.wipo.org/wsdl/ps" xmlns:intf="http://www.wipo.org/wsdl/ps" xmlns:impl="http://www.wipo.org/wsdl/ps" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.wipo.org/wsdl/ps">
+<xsd:include schemaLocation="https://patentscope.wipo.int/patentscope-webservice/servicesPatentScope?xsd=wo-international-application-status-v0-3.xsd"/>
+<element name="getAvailableDocuments">
+<complexType>
+<sequence>
+<element name="iaNumber" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="doc">
+<complexType>
+<sequence/>
+<attribute name="docId" type="xsd:string"/>
+<attribute name="docType" type="xsd:string"/>
+<attribute name="gazette" type="xsd:string"/>
+<attribute name="priorityNumber" type="xsd:string"/>
+<attribute name="ocrPresence" use="required">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="yes"/>
+<xsd:enumeration value="no"/>
+</xsd:restriction>
+</xsd:simpleType>
+</attribute>
+</complexType>
+</element>
+<element name="getAvailableDocumentsResponse">
+<complexType>
+<sequence>
+<element maxOccurs="unbounded" minOccurs="0" ref="impl:doc"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentContent">
+<complexType>
+<sequence>
+<element name="docId" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentContentResponse">
+<complexType>
+<sequence>
+<element name="documentContent" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentOcrContent">
+<complexType>
+<sequence>
+<element name="docId" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentOcrContentResponse">
+<complexType>
+<sequence>
+<element name="documentContent" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+</sequence>
+</complexType>
+</element>
+<element name="getIASR">
+<complexType>
+<sequence>
+<element name="iaNumber" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getIASRResponse">
+<complexType>
+<sequence>
+<element ref="tns:wo-international-application-status"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentTableOfContents">
+<complexType>
+<sequence>
+<element name="docId" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentTableOfContentsResponse">
+<complexType>
+<sequence>
+<element maxOccurs="unbounded" minOccurs="0" name="content" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentContentPage">
+<complexType>
+<sequence>
+<element name="docId" type="xsd:string"/>
+<element name="pageId" type="xsd:string"/>
+</sequence>
+</complexType>
+</element>
+<element name="getDocumentContentPageResponse">
+<complexType>
+<sequence>
+<element name="pageContent" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+</sequence>
+</complexType>
+</element>
+<complexType name="UnknownApplicationException">
+<sequence>
+<element name="message" nillable="true" type="xsd:string"/>
+<element name="quantity" type="xsd:int"/>
+</sequence>
+</complexType>
+<element name="applicationFault" type="impl:UnknownApplicationException"/>
+<complexType name="UnknownDocumentException">
+<sequence>
+<element name="message" nillable="true" type="xsd:string"/>
+<element name="quantity" type="xsd:int"/>
+</sequence>
+</complexType>
+<element name="documentFault" type="impl:UnknownDocumentException"/>
+</schema>
+</wsdl:types>
+<wsdl:message name="UnknownDocumentException">
+<wsdl:part element="impl:documentFault" name="fault"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAvailableDocumentsResponse">
+<wsdl:part element="impl:getAvailableDocumentsResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentContentPageRequest">
+<wsdl:part element="impl:getDocumentContentPage" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getIASRRequest">
+<wsdl:part element="impl:getIASR" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getIASRResponse">
+<wsdl:part element="impl:getIASRResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentContentResponse">
+<wsdl:part element="impl:getDocumentContentResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentContentPageResponse">
+<wsdl:part element="impl:getDocumentContentPageResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentOcrContentResponse">
+<wsdl:part element="impl:getDocumentOcrContentResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentContentRequest">
+<wsdl:part element="impl:getDocumentContent" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentOcrContentRequest">
+<wsdl:part element="impl:getDocumentOcrContent" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentTableOfContentsResponse">
+<wsdl:part element="impl:getDocumentTableOfContentsResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getAvailableDocumentsRequest">
+<wsdl:part element="impl:getAvailableDocuments" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="getDocumentTableOfContentsRequest">
+<wsdl:part element="impl:getDocumentTableOfContents" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="UnknownApplicationException">
+<wsdl:part element="impl:applicationFault" name="fault"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="PatentScope">
+<wsdl:operation name="getAvailableDocuments">
+<wsdl:input message="impl:getAvailableDocumentsRequest" name="getAvailableDocumentsRequest"> </wsdl:input>
+<wsdl:output message="impl:getAvailableDocumentsResponse" name="getAvailableDocumentsResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownApplicationException" name="UnknownApplicationException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentContent">
+<wsdl:input message="impl:getDocumentContentRequest" name="getDocumentContentRequest"> </wsdl:input>
+<wsdl:output message="impl:getDocumentContentResponse" name="getDocumentContentResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownDocumentException" name="UnknownDocumentException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentOcrContent">
+<wsdl:input message="impl:getDocumentOcrContentRequest" name="getDocumentOcrContentRequest"> </wsdl:input>
+<wsdl:output message="impl:getDocumentOcrContentResponse" name="getDocumentOcrContentResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownDocumentException" name="UnknownDocumentException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentTableOfContents">
+<wsdl:input message="impl:getDocumentTableOfContentsRequest" name="getDocumentTableOfContentsRequest"> </wsdl:input>
+<wsdl:output message="impl:getDocumentTableOfContentsResponse" name="getDocumentTableOfContentsResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownDocumentException" name="UnknownDocumentException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentContentPage">
+<wsdl:input message="impl:getDocumentContentPageRequest" name="getDocumentContentPageRequest"> </wsdl:input>
+<wsdl:output message="impl:getDocumentContentPageResponse" name="getDocumentContentPageResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownDocumentException" name="UnknownDocumentException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getIASR">
+<wsdl:input message="impl:getIASRRequest" name="getIASRRequest"> </wsdl:input>
+<wsdl:output message="impl:getIASRResponse" name="getIASRResponse"> </wsdl:output>
+<wsdl:fault message="impl:UnknownApplicationException" name="UnknownApplicationException"> </wsdl:fault>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="PatentScopeSoapBinding" type="impl:PatentScope">
+<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="getAvailableDocuments">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getAvailableDocumentsRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getAvailableDocumentsResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownApplicationException">
+<wsdlsoap:fault name="UnknownApplicationException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentContent">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getDocumentContentRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getDocumentContentResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownDocumentException">
+<wsdlsoap:fault name="UnknownDocumentException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentOcrContent">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getDocumentOcrContentRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getDocumentOcrContentResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownDocumentException">
+<wsdlsoap:fault name="UnknownDocumentException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getIASR">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getIASRRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getIASRResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownApplicationException">
+<wsdlsoap:fault name="UnknownApplicationException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentTableOfContents">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getDocumentTableOfContentsRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getDocumentTableOfContentsResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownDocumentException">
+<wsdlsoap:fault name="UnknownDocumentException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="getDocumentContentPage">
+<wsdlsoap:operation soapAction=""/>
+<wsdl:input name="getDocumentContentPageRequest">
+<wsdlsoap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getDocumentContentPageResponse">
+<wsdlsoap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnknownDocumentException">
+<wsdlsoap:fault name="UnknownDocumentException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="PatentScopeService">
+<wsdl:port binding="impl:PatentScopeSoapBinding" name="PatentScope">
+<wsdlsoap:address location="https://patentscope.wipo.int/patentscope-webservice/servicesPatentScope"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
